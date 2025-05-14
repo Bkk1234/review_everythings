@@ -1,0 +1,32 @@
+version: '3.3'
+
+services:
+  wordpress:
+    image: wordpress:latest
+    container_name: wp_site2
+    restart: always
+    ports:
+      - "8002:80"
+    environment:
+      WORDPRESS_DB_HOST: db:3306
+      WORDPRESS_DB_USER: wp2user
+      WORDPRESS_DB_PASSWORD: wp2pass
+      WORDPRESS_DB_NAME: wp2db
+    volumes:
+      - wp2_data:/var/www/html
+
+  db:
+    image: mariadb:10.5
+    container_name: wp2_db
+    restart: always
+    environment:
+      MYSQL_DATABASE: wp2db
+      MYSQL_USER: wp2user
+      MYSQL_PASSWORD: wp2pass
+      MYSQL_ROOT_PASSWORD: rootpass2
+    volumes:
+      - db2_data:/var/lib/mysql
+
+volumes:
+  wp2_data:
+  db2_data:
